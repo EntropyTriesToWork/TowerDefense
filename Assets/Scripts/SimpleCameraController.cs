@@ -106,11 +106,10 @@ namespace UnityTemplateProjects
             {
                 var dist = cameraTransform.localPosition.magnitude;
                 var zoomDist = Mathf.Clamp(dist + //Add local position offset distance.
-                    GetScrollWheelValue() * zoomSpeed //Calculate distance to move.
+                    -GetScrollWheelValue() * zoomSpeed //Calculate distance to move.
                     * dist / maxZoom, //Increase zoom speed based on current distance from local Vector3.zero. 
                     minZoom, maxZoom);
-                _cameraZoomPos = -zoomDist * cameraTransform.forward;
-                Debug.Log("Forward: " + cameraTransform.forward + " Resulting Position: " + _cameraZoomPos);
+                _cameraZoomPos = -zoomDist * cameraTransform.InverseTransformDirection(cameraTransform.forward);
             }
             cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, _cameraZoomPos, zoomLerpTime * Time.deltaTime * 50);
         }
@@ -120,13 +119,11 @@ namespace UnityTemplateProjects
         [Button("Reset Camera")]
         public void ResetCamera()
         {
-            _cameraZoomPos = new Vector3(0, 7, 3.5f);
+            _cameraZoomPos = new Vector3(0, 0, (maxZoom + minZoom) / 2f);
         }
         #endregion
 
         #region Getters
-        Vector3 DirectionToCenter() => (transform.position - cameraTransform.position).normalized;
-
         //Input
         Vector3 GetInputTranslationDirection()
         {

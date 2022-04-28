@@ -1,12 +1,11 @@
-﻿#if ENABLE_INPUT_SYSTEM 
-using UnityEngine.InputSystem;
-#endif
-
-using UnityEngine;
+﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace UnityTemplateProjects
+namespace Entropy.TD.Camera
 {
+    /// <summary>
+    /// This camera controller was mostly copied from the CameraController in Unity's default URP project's example scene with the exception of the rotation.
+    /// </summary>
     public class SimpleCameraController : MonoBehaviour
     {
         #region Variables

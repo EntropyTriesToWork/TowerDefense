@@ -50,9 +50,9 @@ namespace Entropy.TD.Camera
             if (IsEscapePressed())
             {
                 Application.Quit();
-				#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false; 
-				#endif
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
             }
 
             // Hide and lock cursor when right mouse button pressed
@@ -72,13 +72,13 @@ namespace Entropy.TD.Camera
             if (IsCameraRotationAllowed())
             {
                 var mouseMovement = GetInputLookRotation() * Time.deltaTime * 5;
-                
+
                 var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
 
                 m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivityFactor;
-                //m_TargetCameraState.pitch += mouseMovement.y * mouseSensitivityFactor;
+                //m_TargetCameraState.pitch += -mouseMovement.y * mouseSensitivityFactor;
             }
-            
+
             // Translation
             var translation = GetInputTranslationDirection() * Time.deltaTime;
 

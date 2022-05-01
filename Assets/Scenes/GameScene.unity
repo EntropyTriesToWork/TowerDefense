@@ -508,7 +508,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1811,6 +1811,34 @@ PrefabInstance:
     - target: {fileID: 9045553773727986583, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
       propertyPath: m_Name
       value: CameraController
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.data[1].value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045553773727986585, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}
+      propertyPath: mouseSensitivityCurve.m_Curve.Array.data[1].outWeight
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49a0bf0ccda52954aa375ef4539fb6e7, type: 3}

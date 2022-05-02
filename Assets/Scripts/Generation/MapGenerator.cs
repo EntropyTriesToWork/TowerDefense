@@ -7,31 +7,82 @@ using Sirenix.OdinInspector;
 public class MapGenerator : MonoBehaviour
 {
     [BoxGroup("Map Settings")] public Vector2 mapSize = new Vector2(10, 10);
-    [BoxGroup("Map Settings")] public List<MapTile> mapTiles;
+    [BoxGroup("Map Settings")] public MapTileset tileSet;
 
     [BoxGroup("Read Only")] [ReadOnly] public List<GameObject> mapTileList = new List<GameObject>();
 
+    public Dictionary<Vector3, TileData> tiles = new Dictionary<Vector3, TileData>();
+    int _tileSetWeight = 0;
+
     [Button]
-    public void CreateNewMap()
+    public void GenerateMap()
     {
         ClearMapData();
-        if (mapTiles.Count < 1) { return; }
+        SetTileSetWeight();
+        if (tileSet.mapTiles.Count < 1) { return; }
         for (int x = 0; x < mapSize.x; x++)
         {
             for (int y = 0; y < mapSize.y; y++)
             {
-                GameObject prefab = mapTiles[Random.Range(0, mapTiles.Count)].tilePrefab;
-
-                if (prefab != null)
-                {
-                    GameObject tile = Instantiate(prefab, new Vector3(x, 0, y), Quaternion.identity);
-                    tile.transform.SetParent(transform);
-                    mapTileList.Add(tile);
-                }
+                GameObject tile = Instantiate(GetRandomTile().tilePrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(0, GetRandomTileRotation(), 0)));
+                tile.transform.SetParent(transform);
+                mapTileList.Add(tile);
             }
         }
         CombineMeshes();
+        MapManager.Instance.mapSize = mapSize;
     }
+    [Button]
+    public void GenerateMapData()
+    {
+        Debug.Log("Starting Map Generation...");
+        tiles = new Dictionary<Vector3, TileData>();
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                tiles.Add(new Vector3(x, 0, y), new TileData(GetRandomTile().tileData, new Vector3(x, 0, y)));
+            }
+        }
+        Debug.Log("Generated " + tiles.Count + " total tiles.");
+
+        //Insert preset tiles here? 
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+
+        }
+    }
+    public void SetTileSetWeight()
+    {
+        _tileSetWeight = 0;
+        for (int i = 0; i < tileSet.mapTiles.Count; i++)
+        {
+            _tileSetWeight += tileSet.mapTiles[i].weight;
+        }
+    }
+    public MapTile GetRandomTile()
+    {
+        if (tileSet.mapTiles.Count < 1) { return tileSet.basicTile; }
+
+        int rand = Random.Range(0, _tileSetWeight);
+        for (int i = 0; i < tileSet.mapTiles.Count; i++)
+        {
+            rand -= tileSet.mapTiles[i].weight;
+            if (rand <= 0) { return tileSet.mapTiles[i]; }
+        }
+        return tileSet.basicTile;
+    }
+
+    #region Path
+    [Button]
+    public void GeneratePaths()
+    {
+        Debug.Log("Generating Paths...");
+    }
+    #endregion
+
+    #region Map
     [Button]
     public void RecreateMap()
     {
@@ -59,6 +110,9 @@ public class MapGenerator : MonoBehaviour
             mapTileList[i].SetActive(false);
         }
     }
+    #endregion
+
+    #region Mesh
     [Button]
     public void CombineMeshes()
     {
@@ -74,7 +128,7 @@ public class MapGenerator : MonoBehaviour
             if (!meshRenderer || !meshFilter.sharedMesh || meshRenderer.sharedMaterials.Length != meshFilter.sharedMesh.subMeshCount) { continue; }
             for (int s = 0; s < meshFilter.sharedMesh.subMeshCount; s++)
             {
-                int materialArrayIndex = Contains(materials, meshRenderer.sharedMaterials[s].name);
+                int materialArrayIndex = ContainsMaterial(materials, meshRenderer.sharedMaterials[s].name);
                 if (materialArrayIndex == -1)
                 {
                     materials.Add(meshRenderer.sharedMaterials[s]);
@@ -100,6 +154,11 @@ public class MapGenerator : MonoBehaviour
         {
             meshRendererCombine = gameObject.AddComponent<MeshRenderer>();
         }
+        MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
+        if (meshCollider == null)
+        {
+            meshCollider = gameObject.AddComponent<MeshCollider>();
+        }
         // Combine by material index into per-material meshes
         // also, Create CombineInstance array for next step
         Mesh[] meshes = new Mesh[materials.Count];
@@ -118,6 +177,7 @@ public class MapGenerator : MonoBehaviour
         // Combine into one
         meshFilterCombine.sharedMesh = new Mesh();
         meshFilterCombine.sharedMesh.CombineMeshes(combineInstances, false, false);
+        meshCollider.sharedMesh = meshFilterCombine.sharedMesh;
         // Destroy other meshes
         foreach (Mesh oldMesh in meshes)
         {
@@ -133,8 +193,9 @@ public class MapGenerator : MonoBehaviour
         //    DestroyImmediate(meshFilter.gameObject);
         //}
         DisableMapTiles();
+        StaticBatchingUtility.Combine(this.gameObject);
     }
-    private int Contains(ArrayList searchList, string searchName)
+    private int ContainsMaterial(ArrayList searchList, string searchName)
     {
         for (int i = 0; i < searchList.Count; i++)
         {
@@ -145,18 +206,46 @@ public class MapGenerator : MonoBehaviour
         }
         return -1;
     }
+    int[] _tileRots = new int[] { 90, 180, -90, -180 };
+    public int GetRandomTileRotation()
+    {
+        return _tileRots[Random.Range(0, _tileRots.Length)];
+    }
+    #endregion
+
+    #region Getters
+    public TileData GetAdjacentTile(TileData tile, Direction dir)
+    {
+        Vector3 pos = tile.worldPos;
+        switch (dir)
+        {
+            case Direction.North:
+                pos += Vector3.forward;
+                break;
+            case Direction.East:
+                pos += Vector3.right;
+                break;
+            case Direction.South:
+                pos += -Vector3.forward;
+                break;
+            case Direction.West:
+                pos += -Vector3.right;
+                break;
+            default:
+                break;
+        }
+        if (tiles.ContainsKey(pos))
+        {
+            return tiles[pos];
+        }
+        return new TileData();
+    }
+    #endregion
 
     #region Editor
-    [BoxGroup("Editor")] public float gizmoSize = 0.1f;
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        for (int x = 0; x < mapSize.x; x++)
-        {
-            for (int y = 0; y < mapSize.y; y++)
-            {
-                Gizmos.DrawSphere(new Vector3(x, 0, y), gizmoSize);
-            }
-        }
+        Gizmos.DrawWireCube(new Vector3(mapSize.x / 2f - 0.5f, 0, mapSize.y / 2f - 0.5f), new Vector3(mapSize.x, 1, mapSize.y));
     }
     #endregion
 }

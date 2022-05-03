@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class MapManager : MonoBehaviour
 {
@@ -12,12 +13,14 @@ public class MapManager : MonoBehaviour
     public GameObject selectionIndicator;
     public GameObject selectionIndicatorPrefab;
 
+    public List<MeshFilter> maps;
+
     private void Awake()
     {
         Instance = this;
         selectionIndicator = Instantiate(selectionIndicatorPrefab, Vector3.zero, Quaternion.identity);
+        maps = new List<MeshFilter>();
     }
-
     void Update()
     {
         float distance;

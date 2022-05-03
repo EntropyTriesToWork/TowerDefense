@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 9645f320bc3f3344a8dc46a4ce56daf2
+guid: 37b62e5392b2f9a48b020667ee6c3270
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
   externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: crystal
-    second: {fileID: 2100000, guid: 6ba5afa890ee36e4683c6b5bf7d50282, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -19,6 +14,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: foliage
     second: {fileID: 2100000, guid: 1a8bba99fdd29064885136fc57b29e05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood
+    second: {fileID: 2100000, guid: 17e5589fc9069544090ab425e59f1aca, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,7 +50,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1

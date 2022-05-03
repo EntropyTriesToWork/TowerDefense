@@ -41,10 +41,10 @@ public enum Direction
 }
 public struct TileData
 {
-    public MapTileData tileData;
+    public MapTile tileData;
     public Vector3 worldPos;
 
-    public TileData(MapTileData mapTile, Vector3 worldPos)
+    public TileData(MapTile mapTile, Vector3 worldPos)
     {
         tileData = mapTile;
         this.worldPos = worldPos;
@@ -54,5 +54,6 @@ public struct TileData
 public struct MapTileset
 {
     public MapTile basicTile;
+    public List<MapTile> pathTiles;
     public List<MapTile> mapTiles;
 }

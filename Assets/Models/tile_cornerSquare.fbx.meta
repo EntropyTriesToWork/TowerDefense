@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 279428d4fc78dac4bbb65bdff5b468fc
+guid: 33b79c080e99bf64089408cec66fd97f
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -12,13 +12,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: foliage
-    second: {fileID: 2100000, guid: 1a8bba99fdd29064885136fc57b29e05, type: 2}
+      name: dirtDark
+    second: {fileID: 2100000, guid: 0413d3354d1d3564abe235b86bf1f42c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: wood
-    second: {fileID: 2100000, guid: 17e5589fc9069544090ab425e59f1aca, type: 2}
+      name: foliage
+    second: {fileID: 2100000, guid: 1a8bba99fdd29064885136fc57b29e05, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

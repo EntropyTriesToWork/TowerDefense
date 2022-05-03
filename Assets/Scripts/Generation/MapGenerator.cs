@@ -9,15 +9,13 @@ public class MapGenerator : MonoBehaviour
     [BoxGroup("Map Settings")] public Vector2 mapSize = new Vector2(10, 10);
     [BoxGroup("Map Settings")] public MapTileset tileSet;
 
-    [BoxGroup("Read Only")] [ReadOnly] public List<GameObject> mapTileList = new List<GameObject>();
-
     public Dictionary<Vector3, TileData> tiles = new Dictionary<Vector3, TileData>();
     int _tileSetWeight = 0;
+    int _currentMapPiece = 0;
 
     [Button]
     public void GenerateMap()
     {
-        ClearMapData();
         SetTileSetWeight();
         if (tileSet.mapTiles.Count < 1) { return; }
         for (int x = 0; x < mapSize.x; x++)
@@ -26,11 +24,11 @@ public class MapGenerator : MonoBehaviour
             {
                 GameObject tile = Instantiate(GetRandomTile().tilePrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(0, GetRandomTileRotation(), 0)));
                 tile.transform.SetParent(transform);
-                mapTileList.Add(tile);
             }
         }
         CombineMeshes();
-        MapManager.Instance.mapSize = mapSize;
+        MapManager.Instance.mapSize += new Vector2(mapSize.x, 0);
+        _currentMapPiece++;
     }
     [Button]
     public void GenerateMapData()
@@ -41,7 +39,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < mapSize.y; y++)
             {
-                tiles.Add(new Vector3(x, 0, y), new TileData(GetRandomTile().tileData, new Vector3(x, 0, y)));
+                tiles.Add(new Vector3(x, 0, y), new TileData(GetRandomTile(), new Vector3(x, 0, y)));
             }
         }
         Debug.Log("Generated " + tiles.Count + " total tiles.");
@@ -82,39 +80,9 @@ public class MapGenerator : MonoBehaviour
     }
     #endregion
 
-    #region Map
-    [Button]
-    public void RecreateMap()
-    {
-        if (mapTileList.Count < 1) { return; }
-        for (int i = 0; i < mapTileList.Count; i++)
-        {
-            mapTileList[i].SetActive(true);
-        }
-        CombineMeshes();
-    }
-    [Button]
-    public void ClearMapData()
-    {
-        for (int i = 0; i < mapTileList.Count; i++)
-        {
-            Destroy(mapTileList[i]);
-        }
-        mapTileList.Clear();
-    }
-    [Button]
-    public void DisableMapTiles()
-    {
-        for (int i = 0; i < mapTileList.Count; i++)
-        {
-            mapTileList[i].SetActive(false);
-        }
-    }
-    #endregion
-
     #region Mesh
     [Button]
-    public void CombineMeshes()
+    public MeshFilter CombineMeshes()
     {
         ArrayList materials = new ArrayList();
         ArrayList combineInstanceArrays = new ArrayList();
@@ -143,21 +111,22 @@ public class MapGenerator : MonoBehaviour
                 (combineInstanceArrays[materialArrayIndex] as ArrayList).Add(combineInstance);
             }
         }
+        GameObject obj = new GameObject("Map Piece: " + _currentMapPiece);
         // Get / Create mesh filter & renderer
-        MeshFilter meshFilterCombine = gameObject.GetComponent<MeshFilter>();
+        MeshFilter meshFilterCombine = obj.GetComponent<MeshFilter>();
         if (meshFilterCombine == null)
         {
-            meshFilterCombine = gameObject.AddComponent<MeshFilter>();
+            meshFilterCombine = obj.AddComponent<MeshFilter>();
         }
-        MeshRenderer meshRendererCombine = gameObject.GetComponent<MeshRenderer>();
+        MeshRenderer meshRendererCombine = obj.GetComponent<MeshRenderer>();
         if (meshRendererCombine == null)
         {
-            meshRendererCombine = gameObject.AddComponent<MeshRenderer>();
+            meshRendererCombine = obj.AddComponent<MeshRenderer>();
         }
-        MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
+        MeshCollider meshCollider = obj.GetComponent<MeshCollider>();
         if (meshCollider == null)
         {
-            meshCollider = gameObject.AddComponent<MeshCollider>();
+            meshCollider = obj.AddComponent<MeshCollider>();
         }
         // Combine by material index into per-material meshes
         // also, Create CombineInstance array for next step
@@ -168,6 +137,7 @@ public class MapGenerator : MonoBehaviour
         {
             CombineInstance[] combineInstanceArray = (combineInstanceArrays[m] as ArrayList).ToArray(typeof(CombineInstance)) as CombineInstance[];
             meshes[m] = new Mesh();
+            meshes[m].indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             meshes[m].CombineMeshes(combineInstanceArray, true, true);
 
             combineInstances[m] = new CombineInstance();
@@ -176,7 +146,9 @@ public class MapGenerator : MonoBehaviour
         }
         // Combine into one
         meshFilterCombine.sharedMesh = new Mesh();
+        //meshFilterCombine.sharedMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         meshFilterCombine.sharedMesh.CombineMeshes(combineInstances, false, false);
+        meshFilterCombine.sharedMesh.Optimize();
         meshCollider.sharedMesh = meshFilterCombine.sharedMesh;
         // Destroy other meshes
         foreach (Mesh oldMesh in meshes)
@@ -187,13 +159,17 @@ public class MapGenerator : MonoBehaviour
         // Assign materials
         Material[] materialsArray = materials.ToArray(typeof(Material)) as Material[];
         meshRendererCombine.materials = materialsArray;
-        //foreach (MeshFilter meshFilter in meshFilters)
-        //{
-        //    if (meshFilter == null || meshFilter.transform == transform) { continue; }
-        //    DestroyImmediate(meshFilter.gameObject);
-        //}
-        DisableMapTiles();
-        StaticBatchingUtility.Combine(this.gameObject);
+
+        foreach (MeshFilter meshFilter in meshFilters)
+        {
+            if (meshFilter == null || meshFilter.transform == transform) { continue; }
+            DestroyImmediate(meshFilter.gameObject);
+        }
+
+        StaticBatchingUtility.Combine(obj);
+        obj.transform.position = new Vector3(mapSize.x * _currentMapPiece, 0, 0);
+        MapManager.Instance.maps.Add(meshFilterCombine);
+        return meshFilterCombine;
     }
     private int ContainsMaterial(ArrayList searchList, string searchName)
     {

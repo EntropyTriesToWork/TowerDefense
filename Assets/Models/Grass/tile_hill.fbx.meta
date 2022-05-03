@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37b62e5392b2f9a48b020667ee6c3270
+guid: b7d9056362be0d3448d4fe68d44ade2f
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -14,11 +14,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: foliage
     second: {fileID: 2100000, guid: 1a8bba99fdd29064885136fc57b29e05, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: wood
-    second: {fileID: 2100000, guid: 17e5589fc9069544090ab425e59f1aca, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,7 +45,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1

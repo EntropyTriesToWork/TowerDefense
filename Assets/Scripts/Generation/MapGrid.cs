@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map
+public class MapGrid
 {
-    public Vector2 mapSize;
-    public List<Path> paths;
+    public GameObject mapObj;
+    public MeshFilter mapMesh;
+    public List<PathData> path;
 }
-public class Path
+public class PathData
 {
     public List<Vector3> pathPoints;
     public Vector3 spawnPoint;

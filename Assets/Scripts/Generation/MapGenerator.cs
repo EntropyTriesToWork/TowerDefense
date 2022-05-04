@@ -13,32 +13,30 @@ public class MapGenerator : MonoBehaviour
     int _tileSetWeight = 0;
     int _currentMapPiece = 0;
 
-    [Button]
-    public void GenerateMap()
+    public MapGrid GenerateNewMap()
     {
         SetTileSetWeight();
-        if (tileSet.mapTiles.Count < 1) { return; }
-        for (int x = 0; x < mapSize.x; x++)
-        {
-            for (int y = 0; y < mapSize.y; y++)
-            {
-                GameObject tile = Instantiate(GetRandomTile().tilePrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(0, GetRandomTileRotation(), 0)));
-                tile.transform.SetParent(transform);
-            }
-        }
-        CombineMeshes();
-        MapManager.Instance.mapSize += new Vector2(mapSize.x, 0);
+        CreateMapTiles();
+        MapGrid mapGrid = CombineMeshesAndCreateMapGrid();
         _currentMapPiece++;
+        return mapGrid;
     }
-    [Button]
+    public void GenerateNewStartingMapGrid()
+    {
+
+    }
     public void GenerateMapData()
     {
         Debug.Log("Starting Map Generation...");
         tiles = new Dictionary<Vector3, TileData>();
+
+        //Insert path tiles here
+
         for (int x = 0; x < mapSize.x; x++)
         {
             for (int y = 0; y < mapSize.y; y++)
             {
+                if(tiles.ContainsKey(new Vector3(x, 0, y))) { continue;}
                 tiles.Add(new Vector3(x, 0, y), new TileData(GetRandomTile(), new Vector3(x, 0, y)));
             }
         }
@@ -81,8 +79,19 @@ public class MapGenerator : MonoBehaviour
     #endregion
 
     #region Mesh
-    [Button]
-    public MeshFilter CombineMeshes()
+    private void CreateMapTiles()
+    {
+        if (tileSet.mapTiles.Count < 1) { Debug.LogError("Map Generator trying to create map tiles without a TileSet!"); return; }
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                GameObject tile = Instantiate(GetRandomTile().tilePrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(0, GetRandomTileRotation(), 0)));
+                tile.transform.SetParent(transform);
+            }
+        }
+    }
+    private MapGrid CombineMeshesAndCreateMapGrid()
     {
         ArrayList materials = new ArrayList();
         ArrayList combineInstanceArrays = new ArrayList();
@@ -165,11 +174,11 @@ public class MapGenerator : MonoBehaviour
             if (meshFilter == null || meshFilter.transform == transform) { continue; }
             DestroyImmediate(meshFilter.gameObject);
         }
-
-        StaticBatchingUtility.Combine(obj);
-        obj.transform.position = new Vector3(mapSize.x * _currentMapPiece, 0, 0);
-        MapManager.Instance.maps.Add(meshFilterCombine);
-        return meshFilterCombine;
+        return new MapGrid()
+        {
+            mapMesh = meshFilterCombine,
+            mapObj = obj,
+        };
     }
     private int ContainsMaterial(ArrayList searchList, string searchName)
     {

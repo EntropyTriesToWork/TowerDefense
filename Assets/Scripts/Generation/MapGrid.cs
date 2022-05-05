@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGrid
+namespace Entropy.TD.Map
 {
-    public GameObject mapObj;
-    public MeshFilter mapMesh;
-    public List<PathData> path;
-}
-public class PathData
-{
-    public List<Vector3> pathPoints;
-    public Vector3 spawnPoint;
-    public Vector3 endPoint;
+    public class MapGrid
+    {
+        public GameObject mapObj;
+        public MeshFilter mapMesh;
+        public List<PathData> path;
+        public Dictionary<Vector3, TileData> tiles = new Dictionary<Vector3, TileData>();
+    }
+    public class PathData
+    {
+        public List<Vector3> pathPoints;
+        public Vector3 spawnPoint;
+        public Vector3 endPoint;
+    }
 }

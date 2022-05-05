@@ -36,6 +36,10 @@ namespace Entropy.TD
             _tween = null;
             transform.DOScale(new Vector3(mapSize, 0.5f, mapSize), 0.1f);
         }
+        public void OnDisable()
+        {
+            _tween.Kill();
+        }
         public void OnDestroy()
         {
             _tween.Kill();

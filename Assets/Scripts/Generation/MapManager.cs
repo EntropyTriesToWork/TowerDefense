@@ -34,8 +34,9 @@ namespace Entropy.TD.Map
             mapGrids = new List<MapGrid>();
             _mapGenerator = GetComponent<MapGenerator>();
             _mapGenerator.mapSize = Vector2.one * mapSize;
+            _mapGenerator.CachePathTiles();
 
-            MapGrid mapGrid = _mapGenerator.GenerateNewMap();
+            MapGrid mapGrid = _mapGenerator.GenerateInitialMapGrid();
             AllMapGrids.Add(Vector3.zero, mapGrid);
             mapGrids.Add(mapGrid);
         }
@@ -88,7 +89,7 @@ namespace Entropy.TD.Map
         }
         public void AddNewGridMap(Direction direction, Vector3 position)
         {
-            MapGrid mapGrid = _mapGenerator.GenerateNewMap();
+            MapGrid mapGrid = _mapGenerator.GenerateMapGrid();
             mapGrid.mapMesh.GetComponent<Transform>().position = position;
             AllMapGrids.Add(position, mapGrid);
             mapGrids.Add(mapGrid);

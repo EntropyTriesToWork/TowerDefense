@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1576,9 +1576,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1574298188}
-  - component: {fileID: 1574298189}
   - component: {fileID: 1574298190}
-  - component: {fileID: 1574298191}
+  - component: {fileID: 1574298189}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -1617,86 +1616,53 @@ MonoBehaviour:
     basicTile:
       tilePrefab: {fileID: 3361591321600399138, guid: 08e97e134f9e49d4d91bfd4c5147a1ba, type: 3}
       weight: 0
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
-    pathTiles:
-    - tilePrefab: {fileID: 0}
+    playerCastle:
+      tilePrefab: {fileID: 7370327242725418957, guid: b4ab947ab5640024285528ad9e303541, type: 3}
+      weight: 0
+    enemySpawnTile:
+      pathTile: {fileID: 8933321327192698757, guid: 714c9005a55fcaf40b3224bf5f8e1db9, type: 3}
       weight: 0
       tileData:
-        mapTileType: 0
+        pathTileType: 4
         N: 1
         E: 1
-        S: 1
+        S: 0
         W: 1
+    pathTiles:
+    - pathTile: {fileID: 9031368000755410560, guid: b7335ddf2e9a4e54990453b60a49552d, type: 3}
+      weight: 0
+      tileData:
+        pathTileType: 3
+        N: 1
+        E: 0
+        S: 1
+        W: 0
+    - pathTile: {fileID: 1529153088523365292, guid: 355d0c5be6c52544b9dfef54ce7f410b, type: 3}
+      weight: 0
+      tileData:
+        pathTileType: 3
+        N: 1
+        E: 0
+        S: 1
+        W: 0
     mapTiles:
     - tilePrefab: {fileID: 3361591321600399138, guid: 08e97e134f9e49d4d91bfd4c5147a1ba, type: 3}
       weight: 200
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 919132149155446097, guid: f5ae6f46a7c03f44495e9950851304c0, type: 3}
       weight: 100
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 4512777838720486056, guid: baa78e9f5442568419623cc2fa4b55f8, type: 3}
       weight: 50
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 3601514294903778042, guid: be183f390b4131146a55607c0c3652a0, type: 3}
       weight: 25
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 2535695735033990147, guid: 0a51f995c86293d40be00bdcc63da6df, type: 3}
       weight: 25
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 7203601739764467047, guid: 929b319e2462fae49bb39492647adb5b, type: 3}
       weight: 15
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 2107971261740485542, guid: bc043fea669a84d41a92588d23dfc987, type: 3}
       weight: 5
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
     - tilePrefab: {fileID: 1870305850859518077, guid: 70dd9113d94841844a289182a85f1b37, type: 3}
       weight: 5
-      tileData:
-        mapTileType: 0
-        N: 1
-        E: 1
-        S: 1
-        W: 1
+  openSpots: []
 --- !u!114 &1574298190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1713,18 +1679,6 @@ MonoBehaviour:
   selectionIndicatorPrefab: {fileID: 3875526014228341156, guid: 35348045b3b79b74187734e15c4219f7, type: 3}
   expansionArrowPrefab: {fileID: 3822217910333325504, guid: 4e2da4c2b52917643b93a6b0c18f92f7, type: 3}
   mousePosition: {x: 0, y: 0, z: 0}
---- !u!156049354 &1574298191
-Grid:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574298187}
-  m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 1}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 0
-  m_CellSwizzle: 0
 --- !u!1 &1627992238
 GameObject:
   m_ObjectHideFlags: 0

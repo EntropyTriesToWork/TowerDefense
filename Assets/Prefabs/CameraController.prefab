@@ -103,11 +103,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  rotationLerpTime: 0.2
-  zoomSpeed: 5
+  rotationLerpTime: 0.25
+  zoomSpeed: 10
   zoomLerpTime: 0.1
-  minZoom: 5
-  maxZoom: 20
+  minZoom: 8
+  maxZoom: 40
 --- !u!1 &9045553773965645264
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,8 +208,7 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras:
-  - {fileID: 0}
+  m_Cameras: []
   m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2

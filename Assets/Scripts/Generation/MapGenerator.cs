@@ -95,12 +95,12 @@ namespace Entropy.TD.Map
             if (tileSet.pathTiles.Count < 1) { Debug.LogError("Map Generator trying to create path without a TileSet!"); return; }
 
             GameObject prefab = Instantiate(_straightPaths[Random.Range(0, _straightPaths.Count)].pathTile, Vector3.zero, Quaternion.identity);
-            foreach(var pos in prefab.GetComponentsInChildren<Transform>())
+            foreach (var pos in prefab.GetComponentsInChildren<Transform>())
             {
-                if(prefab != pos.gameObject)
+                if (prefab != pos.gameObject)
                 {
-                    openSpots.Remove(pos.position);
                     pos.transform.SetParent(gameObject.transform);
+                    openSpots.Remove(pos.position);
                 }
             }
             Destroy(prefab);

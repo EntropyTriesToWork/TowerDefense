@@ -815,23 +815,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74bf9a10f9d4d749ae82fcbcef34a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 50
+  mapSize: 15
   mapScale: 10
   octaves: 4
   persistance: 0.5
   lacunarity: 2
-  seed: 0
+  seed: 16681
   offset: {x: 0, y: 0}
   highlandHeight: 0.5
   middlelandHeight: 0
-  lowlandHeight: -0.5
+  lowlandHeight: -0.3
   highlandTile: {fileID: 8417253536375586501, guid: 45f9c00483aef734ea6656c238d5a307, type: 3}
   middlelandTile: {fileID: 919132149155446097, guid: f5ae6f46a7c03f44495e9950851304c0, type: 3}
   lowlandTile: {fileID: 3361591321600399138, guid: 08e97e134f9e49d4d91bfd4c5147a1ba, type: 3}
   pathTile: {fileID: 155676269499499017, guid: 036f6c0444c839546a93f5e7ea9e74fa, type: 3}
+  treePrefab: {fileID: 0}
   tileSnappingDistance: 0.2
-  pathPositions:
-  - {x: 5, y: 5}
+  pathPositions: []
 --- !u!4 &716946480
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 1170564787}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1580,6 +1580,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154674921}
   m_CullTransparentMesh: 1
+--- !u!28 &1170564787
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 9
+  m_Height: 9
+  m_CompleteImageSize: 408
+  m_MipsStripped: 0
+  m_TextureFormat: 4
+  m_MipCount: 4
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  m_PlatformBlob: 
+  image data: 408
+  _typelessdata: 161616ff242424ff4c4c4cff2f2f2fff050505ff404040ff595959ff595959ff494949ff7b7b7bff676767ff545454ff3f3f3fff000000ff010101ff1e1e1eff2c2c2cff141414ff828282ff3c3c3cff1b1b1bff000000ff000000ff000000ff000000ff000000ff000000ff484848ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff343434ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff1c1c1cff111111ff000000ff000000ff060606ff000000ff000000ff000000ff000000ff0c0c0cff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff505050ff3b3b3bff1b1b1bff353535ff222222ff000000ff000000ff000000ff121212ff000000ff000000ff000000ff000000ff000000ff000000ff000000ff2b2b2bff141414ff040404ff000000ff101010ff
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1530743699
 GameObject:
   m_ObjectHideFlags: 0

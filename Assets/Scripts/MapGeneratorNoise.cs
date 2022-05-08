@@ -23,6 +23,7 @@ public class MapGeneratorNoise : MonoBehaviour
     [FoldoutGroup("Map Tile")] public GameObject middlelandTile;
     [FoldoutGroup("Map Tile")] public GameObject lowlandTile;
     [FoldoutGroup("Map Tile")] public GameObject pathTile;
+    [FoldoutGroup("Map Tile")] public GameObject treePrefab;
 
     [FoldoutGroup("Map Tile")] public float tileSnappingDistance = 0.2f;
     List<GameObject> _tiles = new List<GameObject>();
@@ -45,22 +46,20 @@ public class MapGeneratorNoise : MonoBehaviour
             for (int y = 0; y < mapSize; y++)
             {
                 float height = Mathf.Round(tilesPerMeter * noiseMap[x, y]) / tilesPerMeter;
-                Vector3 pos = new Vector3(x - mapSize / 2f, height, y - mapSize / 2f);
+                Vector3 pos = new Vector3(x - mapSize / 2f, 0, y - mapSize / 2f);
                 GameObject obj;
                 if (pathPositions.Contains(new Vector2(x, y)))
                 {
                     obj = Instantiate(pathTile, transform);
-                    obj.transform.position = new Vector3(pos.x, lowlandHeight, pos.z);
                 }
                 else
                 {
                     if (height > middlelandHeight) { obj = Instantiate(highlandTile, transform); }
                     else if (height > lowlandHeight) { obj = Instantiate(middlelandTile, transform); }
                     else { obj = Instantiate(lowlandTile, transform); }
-
-                    obj.transform.position = pos;
                 }
-                obj.transform.localScale = new Vector3(1, tilesPerMeter, 1);
+                obj.transform.position = pos;
+                obj.transform.localScale = new Vector3(1, Mathf.Max(-tileSnappingDistance, height) * tilesPerMeter + tileSnappingDistance * 10, 1);
                 _tiles.Add(obj);
             }
         }

@@ -7,6 +7,7 @@ namespace Entropy.TD.Entities
     public struct DamageInfo
     {
         public int damage;
+        public int pierce;
         public bool isCrit;
     }
 }

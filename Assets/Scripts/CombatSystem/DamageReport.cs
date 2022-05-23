@@ -7,5 +7,6 @@ namespace Entropy.TD.Entities
     public struct DamageReport
     {
         public int damageTaken;
+        public bool isDead;
     }
 }

@@ -1,4 +1,5 @@
 using Entropy.TD.Entities;
+using Entropy.TD.Tower.Projectiles;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,23 +19,19 @@ namespace Entropy.TD.Tower
             throw new System.NotImplementedException();
         }
 
-        [Button]
         public override void FireProjectile()
         {
-            GameObject arrow = Instantiate(projectilePrefab, ballistaArrowSpawnPoint.position, ballistaArrowSpawnPoint.rotation);
-        }
-
-        public override List<IDamageable> GetTargets()
-        {
-            throw new System.NotImplementedException();
+            Projectile arrow = Instantiate(projectilePrefab, ballistaArrowSpawnPoint.position, ballistaArrowSpawnPoint.rotation).GetComponent<Projectile>();
+            arrow.Initialize(currentTarget.transform.position, ProjectileSpeed, GetDamageInfo());
+            arrow.transform.forward = ballistaArrowSpawnPoint.forward;
         }
 
         public override void LookAtTarget()
         {
-            ballistaBase.LookAt(testTarget.transform);
+            ballistaBase.LookAt(currentTarget.transform);
             ballistaBase.localEulerAngles = new Vector3(0, ballistaBase.localEulerAngles.y, 0);
 
-            ballistaBow.LookAt(testTarget.transform);
+            ballistaBow.LookAt(currentTarget.transform);
             ballistaBow.localEulerAngles = new Vector3(ballistaBow.localEulerAngles.x, 0, 0);
         }
 

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2e4ea54a182cd45b13be22211157e4, type: 3}
+  m_Name: Cannon
+  m_EditorClassIdentifier: 
+  buildCost: 200
+  towerSprite: {fileID: -6941479207458409696, guid: 9d3008b4fcd79aa46833c8a8994be4c3, type: 3}
+  towerPrefab: {fileID: 23375868166580180, guid: 7f61ef486a209e44e82258bc21cc825c, type: 3}
